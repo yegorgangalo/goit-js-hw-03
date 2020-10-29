@@ -1,24 +1,29 @@
-const inputRef = document.querySelector(".task6__input");
-const buttonSendRef = document.querySelector(".task6__btn-send");
-const buttonExitRef = document.querySelector(".task6__btn-exit");
+const products = [
+  { name: 'Радар', price: 1300, quantity: 4 },
+  { name: 'Сканер', price: 2700, quantity: 3 },
+  { name: 'Дроид', price: 400, quantity: 7 },
+  { name: 'Захват', price: 1200, quantity: 2 },
+];
 
-let numbers = [];
-let total = 0;
+const calculateTotalPrice = function(allProducts, productName) {
+    for (const product of allProducts) {
+        if (product.name === productName) {
+            const totalPrice = product.price * product.quantity;
+            return totalPrice;
+        }
+    }
+    return `${productName} отсутствует в базе`;
+};
 
-buttonSendRef.addEventListener("click", () => {
-    let input = Number(inputRef.value);
-    numbers.push(input);
+/*
+ * Вызовы функции для проверки работоспособности твоей реализации.
+ */
+console.log(calculateTotalPrice(products, 'Радар')); // 5200
 
-    inputRef.value = "";
-    inputRef.focus();
-});
+console.log(calculateTotalPrice(products, 'Дроид')); // 2800
+console.log(calculateTotalPrice(products, 'щось'));
 
-buttonExitRef.addEventListener("click", () => {
-    for (const number of numbers) {
-        total += Number.isNaN(number) ? 0 : number;
-    };
-    alert(`Общая сумма чисел равна ${total}`);
 
-    numbers = [];
-    total = 0;
-});
+// Напиши функцию calculateTotalPrice(allProdcuts, productName),
+// которая получает массив объектов и имя продукта(значение свойства name).
+// Возвращает общую стоимость продукта(цена * количество).

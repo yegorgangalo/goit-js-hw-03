@@ -1,30 +1,107 @@
-const logins = ['Mango', 'robotGoogles', 'Poly', 'Aj4x1sBozz', 'qwerty123'];
-
-const isLoginValid = function(login) {
-    return 4 <= login.length && login.length <= 16 ? true : false;
-};
-
-const isLoginUnique = function(allLogins, login) {
-  return !allLogins.includes(login) ? true : false;
-};
-
-const addLogin = function(allLogins, login) {
-    if (!isLoginValid(login)) {
-        return 'Ошибка! Логин должен быть от 4 до 16 символов';
-    }
-    if (!isLoginUnique(allLogins, login)) {
-        return 'Такой логин уже используется!';
-    }
-
-    allLogins.push(login);
-    return 'Логин успешно добавлен!';
-};
-
 
 /*
- * Вызовы функции для проверки работоспособности твоей реализации.
- */
-console.log(addLogin(logins, 'Ajax')); // 'Логин успешно добавлен!'
-console.log(addLogin(logins, 'robotGoogles')); // 'Такой логин уже используется!'
-console.log(addLogin(logins, 'Zod')); // 'Ошибка! Логин должен быть от 4 до 16 символов'
-console.log(addLogin(logins, 'jqueryisextremelyfast')); // 'Ошибка! Логин должен быть от 4 до 16 символов'
+* Типов транзацкий всего два.
+* Можно положить либо снять деньги со счета.
+*/
+// const Transaction = {
+//     DEPOSIT: 'deposit',
+//     WITHDRAW: 'withdraw',
+// };
+
+// const Transaction = {
+//     type: 'deposit',
+//     amount: 0,
+// };
+
+/*
+* Каждая транзакция это объект со свойствами: id, type и amount
+*/
+
+const account = {
+    // Текущий баланс счета
+    balance: 0,
+
+    // История транзакций
+    transactions: [],
+
+    /*
+    * Метод создает и возвращает объект транзакции.
+    * Принимает сумму и тип транзакции.
+    */
+    createTransaction(amount, type) {
+        const Transaction = {amount, type};
+        return Transaction;
+    },
+
+   /*
+   * Метод отвечающий за добавление суммы к балансу.
+   * Принимает сумму транзакции.
+   * Вызывает createTransaction для создания объекта транзакции
+   * после чего добавляет его в историю транзакций
+   */
+    deposit(amount) {
+        this.balance += amount;
+        const transaction = this.createTransaction(amount, "deposit");
+        this.transactions.push(transaction);
+        return this.transactions;
+    },
+
+  /*
+  * Метод отвечающий за снятие суммы с баланса.
+  * Принимает сумму танзакции.
+  * Вызывает createTransaction для создания объекта транзакции
+  * после чего добавляет его в историю транзакций.
+  *
+  * Если amount больше чем текущий баланс, выводи сообщение
+  * о том, что снятие такой суммы не возможно, недостаточно средств.
+  */
+    withdraw(amount) {
+        if (amount > this.balance) {
+            return `снятие суммы ${amount} не возможно, недостаточно средств`;
+        }
+        this.balance -= amount;
+        const transaction = this.createTransaction(amount, "withdraw");
+        this.transactions.push(transaction);
+        return this.transactions;
+    },
+
+
+//  Метод возвращает текущий баланс
+    getBalance() {
+        return this.balance;
+    },
+
+/*
+* Метод ищет и возвращает объект транзации по id
+*/
+getTransactionDetails(id) {},
+
+/*
+* Метод возвращает количество средств
+* определенного типа транзакции из всей истории транзакций
+*/
+    getTransactionTotal(type) {
+        let transactionTotal = 0;
+        for (const transaction of this.transactions) {
+            if (transaction.type === type) {
+                transactionTotal += transaction.amount;
+            }
+        }
+        return transactionTotal;
+    },
+};
+
+
+// Напиши скрипт управления личным кабинетом интернет банка.
+// Есть объект account в котором необходимо реализовать методы для работы с балансом и историей транзакций.
+console.log(account.createTransaction(50, "withdraw"));
+console.log(account.deposit(400));
+console.log(account.deposit(250));
+console.log(account.deposit(130));
+console.log(account.withdraw(150));
+console.log(account.withdraw(250));
+console.log(account.withdraw(50));
+console.log(account.withdraw(20));
+console.log(account.getBalance());
+console.log(account.getTransactionTotal("deposit"));
+console.log(account.getTransactionTotal("withdraw"));
