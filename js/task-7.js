@@ -42,6 +42,7 @@ const account = {
     deposit(amount) {
         this.balance += amount;
         const transaction = this.createTransaction(amount, "deposit");
+        transaction.id = this.transactions.length;
         this.transactions.push(transaction);
         return this.transactions;
     },
@@ -61,6 +62,7 @@ const account = {
         }
         this.balance -= amount;
         const transaction = this.createTransaction(amount, "withdraw");
+        transaction.id = this.transactions.length;
         this.transactions.push(transaction);
         return this.transactions;
     },
@@ -74,7 +76,14 @@ const account = {
 /*
 * Метод ищет и возвращает объект транзации по id
 */
-getTransactionDetails(id) {},
+    getTransactionDetails(id) {
+        for (const transaction of this.transactions) {
+            if (transaction.id === id) {
+                return transaction;
+            }
+        }
+        return `транзакції ${id} немає в базі`;
+    },
 
 /*
 * Метод возвращает количество средств
@@ -95,13 +104,14 @@ getTransactionDetails(id) {},
 // Напиши скрипт управления личным кабинетом интернет банка.
 // Есть объект account в котором необходимо реализовать методы для работы с балансом и историей транзакций.
 console.log(account.createTransaction(50, "withdraw"));
-console.log(account.deposit(400));
-console.log(account.deposit(250));
-console.log(account.deposit(130));
-console.log(account.withdraw(150));
-console.log(account.withdraw(250));
-console.log(account.withdraw(50));
-console.log(account.withdraw(20));
+console.table(account.deposit(400));
+console.table(account.withdraw(20));
+console.table(account.withdraw(150));
+console.table(account.deposit(250));
+console.table(account.deposit(130));
+console.table(account.withdraw(250));
+console.table(account.withdraw(50));
 console.log(account.getBalance());
 console.log(account.getTransactionTotal("deposit"));
 console.log(account.getTransactionTotal("withdraw"));
+console.log(account.getTransactionDetails(4));
