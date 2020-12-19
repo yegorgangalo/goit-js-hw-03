@@ -22,7 +22,9 @@ const account = {
     //Метод создает и возвращает объект транзакции.
     //Принимает сумму и тип транзакции.
     createTransaction(amount, type) {
-        return {amount, type};
+        this.forIdTransactionsCounter += 1;
+        const id = this.forIdTransactionsCounter;
+        return {id, amount, type};
     },
 
    //Метод отвечающий за добавление суммы к балансу.
@@ -32,8 +34,6 @@ const account = {
     deposit(amount) {
         this.balance += amount;
         const transaction = this.createTransaction(amount, Transaction.DEPOSIT);
-        this.forIdTransactionsCounter += 1;
-        transaction.id = this.forIdTransactionsCounter;
         this.transactions.push(transaction);
         return this.transactions;
     },
@@ -50,8 +50,6 @@ const account = {
         }
         this.balance -= amount;
         const transaction = this.createTransaction(amount, Transaction.WITHDRAW);
-        this.forIdTransactionsCounter += 1;
-        transaction.id = this.forIdTransactionsCounter;
         this.transactions.push(transaction);
         return this.transactions;
     },
@@ -88,7 +86,6 @@ const account = {
 
 // Напиши скрипт управления личным кабинетом интернет банка.
 // Есть объект account в котором необходимо реализовать методы для работы с балансом и историей транзакций.
-console.log(account.createTransaction(50, Transaction.WITHDRAW));
 console.table(account.deposit(400));
 console.table(account.withdraw(20));
 console.table(account.withdraw(150));
