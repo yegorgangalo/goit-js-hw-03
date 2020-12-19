@@ -1,4 +1,6 @@
-const countProps = function(obj) {
+console.log(`%cTask-2`, `color: red; font-size: 16px;`);
+
+const countProps = function (obj) {
   const keys = Object.keys(obj);
   return keys.length;
 };

@@ -1,3 +1,5 @@
+console.log(`%cTask-1`, `color: red; font-size: 16px;`);
+
 const user = {
   name: 'Mango',
   age: 20,

@@ -1,4 +1,6 @@
-const findBestEmployee = function(employees) {
+console.log(`%cTask-3`, `color: red; font-size: 16px;`);
+
+const findBestEmployee = function (employees) {
     const arrayNames = Object.keys(employees);
     let BestResult = 0;
     let BestEmployee = "";

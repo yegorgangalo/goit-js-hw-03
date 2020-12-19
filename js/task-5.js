@@ -1,3 +1,4 @@
+console.log(`%cTask-5`, `color: red; font-size: 16px;`);
 
 const products = [
     { name: 'Радар', price: 1300, quantity: 4 },
@@ -9,7 +10,7 @@ const products = [
 const getAllPropValues = function (arr, prop) {
     const arrPropValue = [];
     for (const obj of arr) {
-        if (obj[prop]) {
+        if (obj.hasOwnProperty(prop)) {
             arrPropValue.push(obj[prop]);
         }
     }

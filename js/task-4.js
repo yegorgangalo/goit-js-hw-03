@@ -1,3 +1,4 @@
+console.log(`%cTask-4`, `color: red; font-size: 16px;`);
 
 const countTotalSalary = function(employees) {
   const arrValues = Object.values(employees);
